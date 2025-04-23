@@ -1,0 +1,123 @@
+import { Box, Button, Typography } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import React from 'react';
+
+function BookingRoomForm() {
+  const [checkInDate, setCheckInDate] = React.useState(
+    new Date().toISOString().split('T')[0]
+  );
+  const [checkOutDate, setCheckOutDate] = React.useState(
+    new Date(new Date().setDate(new Date().getDate() + 1))
+      .toISOString()
+      .split('T')[0]
+  );
+  const [adults, setAdults] = React.useState(1);
+  const [children, setChildren] = React.useState(0);
+
+  const handleAdultsChange = (event) => {
+    setAdults(event.target.value);
+  };
+
+  const handleChildrenChange = (event) => {
+    setChildren(event.target.value);
+  };
+
+  const textFieldSx = {
+    flex: '0 0 45%',
+    border: '1px solid white',
+    p: '10px 15px',
+    backgroundColor: '#1490ac',
+    borderRadius: '9px',
+    '& .MuiSvgIcon-root': { color: 'white' },
+  };
+
+  const inputLabelStyle = { color: 'white' };
+  const inputStyle = { color: 'white' };
+
+  return (
+    <Box
+      component='form'
+      sx={{
+        // '& .MuiTextField-root': { m: 1, width: '25ch' },
+        // width: '400px',
+      }}
+      noValidate
+      autoComplete='off'
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+          flexGrow:2,
+          color: 'white',
+          backgroundColor:'#14404a',
+          padding:'40px 5px',
+          borderRadius:'10px',
+          gap:'20px'
+        }}
+      >
+        <TextField
+          id='check-in-date'
+          label='Check-in'
+          type='date'
+          value={checkInDate}
+          onChange={(e) => setCheckInDate(e.target.value)}
+          InputLabelProps={{ shrink: true, style: inputLabelStyle }}
+          InputProps={{ style: inputStyle }}
+          sx={textFieldSx}
+          variant='standard'
+        />
+        <TextField
+          id='check-out-date'
+          label='Check-out'
+          type='date'
+          value={checkOutDate}
+          onChange={(e) => setCheckOutDate(e.target.value)}
+          InputLabelProps={{ shrink: true, style: inputLabelStyle }}
+          InputProps={{ style: inputStyle }}
+          sx={textFieldSx}
+          variant='standard'
+        />
+        <TextField
+          id='adults'
+          select
+          label='Người lớn'
+          value={adults}
+          onChange={handleAdultsChange}
+          variant='standard'
+          InputLabelProps={{ shrink: true, style: inputLabelStyle }}
+          InputProps={{ style: inputStyle }}
+          sx={textFieldSx}
+        >
+          {[...Array(10).keys()].map((number) => (
+            <MenuItem key={number + 1} value={number + 1}>
+              {number + 1}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          id='children'
+          select
+          label='Trẻ em'
+          value={children}
+          onChange={handleChildrenChange}
+          variant='standard'
+          InputLabelProps={{ shrink: true, style: inputLabelStyle }}
+          InputProps={{ style: inputStyle }}
+          sx={textFieldSx}
+        >
+          {[...Array(10).keys()].map((number) => (
+            <MenuItem key={number} value={number}>
+              {number}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Box>
+    </Box>
+  );
+}
+
+export default BookingRoomForm;
